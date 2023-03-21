@@ -1,0 +1,23 @@
+TC = O(V+E)
+SC = O(V)
+
+void dfs(int node, vector<int>adj[], vector<int>&visited, vector<int>&dfs1){
+      visited[node]=1;
+      dfs1.push_back(node);
+      for(auto it: adj[node]){
+          if(visited[it]==0){
+              //visited[it]=1;
+              dfs(it, adj, visited, dfs1);
+          }
+      }
+  }
+    // Function to return a list containing the DFS traversal of the graph.
+    vector<int> dfsOfGraph(int V, vector<int> adj[]) {
+        vector<int>visited(V,0);
+        vector<int>dfs1;
+        int start =0;
+        dfs(start, adj, visited, dfs1);
+        return dfs1;
+        
+        // Code here
+    }

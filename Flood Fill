@@ -1,0 +1,42 @@
+TC = O(n*m)
+SC = O(n*m)
+
+Khud se solve kiya using bfs.
+
+vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        int n = image.size();
+        int m = image[0].size();
+        queue<pair<int,int>>q;
+        int intialcolor = image[sr][sc];
+        //image[sr][sc] = color;
+        q.push({sr,sc});
+        //int x;
+        //int y;
+        while(q.empty()==false){
+            pair<int,int>p = q.front();
+            int x1= p.first;
+            int x2 = p.second;
+            q.pop();
+            if(image[x1][x2]==color) continue;
+            image[x1][x2]=color;
+
+            int ax[4] = {1,-1,0,0};
+            int ay[4] = {0,0,1,-1};
+
+            for(int i =0; i<4; i++){
+                int x = ax[i]+x1;
+                int y = ay[i]+x2;
+
+                if( x>=0 && x<n && y>=0 && y<m && image[x][y] == intialcolor){
+                    //image[x][y]=color;
+                    q.push({x,y});
+                }
+            }
+
+
+        }
+        return image;
+        
+        
+    }
+};

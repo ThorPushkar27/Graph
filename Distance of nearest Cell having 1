@@ -1,0 +1,52 @@
+TC = O(n*m)
+sc = O(n*m)
+
+class Solution 
+{
+    public:
+    //Function to find distance of nearest 1 in the grid for each cell.
+	vector<vector<int>>nearest(vector<vector<int>>grid)
+	{
+	    int n = grid.size();
+	    int m = grid[0].size();
+	    vector<vector<int>>visited(n,vector<int>(m,0));
+	    vector<vector<int>>dist(n,vector<int>(m,0));
+	    queue<pair<pair<int,int>,int>>q;
+	    for(int i =0; i<n; i++){
+	        for(int j =0; j<m; j++){
+	            if(grid[i][j]==1){
+	                visited[i][j]=1;
+	                q.push({{i,j},0});
+	                
+	            }
+	            else{
+	                visited[i][j]=0;
+	            }
+	        }
+	    }
+	    while(q.empty()==false){
+	        int row = q.front().first.first;
+	        int col = q.front().first.second;
+	        int step = q.front().second;
+	        q.pop();
+	        dist[row][col] = step;
+	        
+	        int ax[4] = {1,-1,0,0};
+	        int ay[4] = {0,0,1,-1};
+	        for(int i =0; i<4; i++){
+	            int x = ax[i]+row;
+	            int y = ay[i]+col;
+	            if(x>=0 && x<n && y>=0 && y<m && visited[x][y]==0){
+	                visited[x][y]=1;
+	                q.push({{x,y},step+1});
+	            }
+	        }
+	         
+	    }
+	    return dist;
+	    
+	    
+	    
+	    // Code here
+	}
+};

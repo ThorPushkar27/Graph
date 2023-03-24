@@ -1,0 +1,36 @@
+class Solution {
+private:
+    bool dfsBipartitecheck(int start, int color, vector<int>adj[], int colour[]){
+        
+        colour[start]=color;
+        for(auto it: adj[start]){
+            if(colour[it]== -1){
+                if(dfsBipartitecheck(it,!color,adj,colour)== false){
+                    return false;
+                }
+            }
+            
+            else if(colour[it]== color){
+                return false;
+            }
+            
+        
+        }
+        return true;
+    }
+public:
+	bool isBipartite(int V, vector<int>adj[]){
+	    int colour[V];
+	    for(int i=0; i<V; i++){
+	        colour[i] = -1;
+	    }
+	    for(int i =0; i<V; i++){
+	        if(colour[i]== -1){
+	            if(dfsBipartitecheck(i,0,adj,colour) == false) {
+	                return false;
+	            }
+	        }
+	    }
+	    return true;
+	    // Code here
+	}

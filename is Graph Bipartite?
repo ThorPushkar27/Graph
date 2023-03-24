@@ -1,0 +1,53 @@
+TC = O(V+E)
+SC = O(V)
+
+class Solution {
+public:
+    bool checkBipartite(int start, vector<vector<int>>& graph, int colour[]){
+        int n = graph.size();
+
+        
+        queue<int>q;
+        q.push(start);
+        colour[start] =0;
+        //vector<int>colour(n,-1);
+       
+        while(q.empty()==false){
+            auto node = q.front();
+            q.pop();
+            for(auto it: graph[node]){
+                if(colour[it]== -1 && colour[node]==0){
+                    colour[it]=1;
+                    q.push(it);
+                }
+                else if(colour[it]== -1 && colour[node]==1){
+                    colour[it]=0;
+                    q.push(it);
+                }
+                else if(colour[it] == colour[node]){
+                    return false;
+                }
+            }
+            
+        }
+        return true;
+    }
+
+    bool isBipartite(vector<vector<int>>& graph) {
+        int n = graph.size();
+        int colour[n];
+        for(int i =0; i<n; i++){
+            colour[i]= -1;
+        }
+        for(int i =0; i<n; i++){
+            if(colour[i]== -1){
+                if(checkBipartite(i,graph,colour)==false){
+                    return false;
+                }
+            }
+            
+        }
+        return true;
+        
+    }
+};

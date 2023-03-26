@@ -1,0 +1,34 @@
+TC and SC is similar to using Priority queue.
+
+class Solution
+{
+	public:
+	//Function to find the shortest distance of all the vertices
+    //from the source vertex S.
+    vector <int> dijkstra(int V, vector<vector<int>> adj[], int S)
+    {
+        vector<int>distance(V,INT_MAX);
+        distance[S] =0;
+        set<pair<int,int>>st;
+        st.insert({0,S});
+        while(st.empty()==false){
+            auto it = *(st.begin());  // Iteratrate through the set members.
+            int dis = it.first;
+            int node = it.second;
+            st.erase(it);
+            for(auto it: adj[node]){
+                int adjNode = it[0];
+                int edgewt = it[1];
+                if(dis+ edgewt < distance[adjNode]){
+                    if(distance[adjNode]!=INT_MAX){
+                        st.erase({distance[adjNode],adjNode});
+                    }
+                    distance[adjNode] = dis + edgewt;
+                    st.insert({distance[adjNode],adjNode});
+                }
+            }
+        }
+        return distance;
+        // Code here
+    }
+};

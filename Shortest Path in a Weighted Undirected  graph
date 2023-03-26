@@ -1,0 +1,49 @@
+class Solution {
+  public:
+    vector<int> shortestPath(int n, int m, vector<vector<int>>& edges) {
+        vector<pair<int,int>>adj[n+1];
+        for(auto it: edges){
+            int u = it[0];
+            int v = it[1];
+            int wt = it[2];
+            adj[u].push_back({v,wt});
+            adj[v].push_back({u,wt});
+        }
+        vector<int>distance(n+1,INT_MAX);
+        vector<int>parent(n+1);
+        for(int i =1; i<n+1; i++){
+            parent[i]=i;
+        }
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>pq;
+        distance[1]= 0;
+        pq.push({0,1});
+        while(pq.empty()==false){
+            int dis = pq.top().first;
+            int node =pq.top().second;
+            pq.pop();
+            for(auto it: adj[node]){
+            
+                int adjNode = it.first;
+                int edgewt = it.second;
+                if(dis+ edgewt < distance[adjNode]){
+                    distance[adjNode] = dis+ edgewt;
+                    pq.push({distance[adjNode],adjNode});
+                    parent[adjNode] = node;
+                }
+            }
+        }
+        if(distance[n]== INT_MAX) return {-1};
+        vector<int>path;
+        int node =n;
+        while(parent[node]!=node){
+            path.push_back(node);
+            node = parent[node];
+        }
+        path.push_back(1);
+        reverse(path.begin(),path.end());
+        return path;
+    
+        
+        // Code here
+    }
+};

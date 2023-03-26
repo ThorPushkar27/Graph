@@ -1,0 +1,44 @@
+TC = O(N+E)
+SC = O(N)
+
+Similar to bfs algorithm.
+
+class Solution {
+  public:
+    vector<int> shortestPath(vector<vector<int>>& edges, int N,int M, int src){
+        vector<int>adj[N];
+        for(auto it: edges){
+            adj[it[0]].push_back(it[1]);
+            adj[it[1]].push_back(it[0]);
+        }
+        vector<int>dis(N,INT_MAX);
+        queue<pair<int,int>>q;
+        q.push({src,0});
+        dis[src]=0;
+        while(q.empty()==false){
+            pair<int,int>p = q.front();
+            int node = p.first;
+            int distance = p.second;
+            q.pop();
+            for(auto it: adj[node]){
+                if(dis[node]+1<dis[it]){  //If a node is previously visited by some other route then we hae to 
+                //check whether that route is shortest route or not.
+                    dis[it] = dis[node]+1;
+                    q.push({it,dis[it]});
+                }
+                
+            }
+        }
+        vector<int>ans;
+        for(int i =0; i<N; i++){
+            if(dis[i]!=INT_MAX){
+                ans.push_back(dis[i]);
+            }
+            else if(dis[i]== INT_MAX){
+                ans.push_back(-1);
+            }
+        }
+        return ans;
+        // code here
+    }
+};

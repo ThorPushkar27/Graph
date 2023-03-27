@@ -1,0 +1,45 @@
+TC =O(n*m)
+SC = O(n*m)
+
+class Solution {
+public:
+    int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
+        int n = grid.size();
+        int m = grid[0].size();
+        if(grid[0][0]==1 ||grid[n-1][m-1]==1 ) return -1;
+        if(grid[0][0]==0 && n==1 && m==1) return 1;
+        int visited[n][m];
+        for(int i =0; i<n; i++){
+            for(int j =0; j<m; j++){
+                visited[i][j]=0;
+            }
+        }
+        
+        queue<pair<pair<int,int>,int>>q;
+        q.push({{0,0},1});
+        visited[0][0]=1;
+        //dis[0][0] = 1;
+        while(q.empty()==false){
+            pair<int,int>p = q.front().first;
+            int x1 = p.first;
+            int y1 = p.second;
+            int distance = q.front().second;
+            q.pop();
+
+            int ax [8] = {1,-1,0,0,1,-1,1,-1};
+            int ay [8] = {0,0,1,-1,1,-1,-1,1};
+            for(int i=0; i<8;i++){
+                int x = ax[i]+x1;
+                int y = ay[i]+y1;
+                if(x>=0 && x<n && y>=0 && y<m && grid[x][y]==0 && visited[x][y]==0){
+                    q.push({{x,y},distance + 1});
+                    visited[x][y] = 1;
+                    if(x == n-1 && y == m-1) return (distance+1);
+
+                }
+            }
+        }
+        return -1;
+        
+    }
+};
